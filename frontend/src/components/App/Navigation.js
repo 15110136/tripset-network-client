@@ -1,6 +1,8 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, generatePath } from 'react-router-dom';
 import styled from 'styled-components';
+
+import * as Routes from 'routes';
 
 import { Spacing } from 'components/Layout';
 import {
@@ -8,6 +10,7 @@ import {
   NotificationIcon,
   HomeIcon,
   PeopleIcon,
+  EnvelopeIcon,
 } from 'components/icons';
 
 const Link = styled(NavLink)`
@@ -19,15 +22,12 @@ const Link = styled(NavLink)`
   border: 1px solid transparent;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid ${p => p.theme.colors.grey[300]};
+    background-color: ${p => p.theme.colors.grey[100]};
   }
 
   &.selected {
     color: ${p => p.theme.colors.primary.main};
-    font-weight: ${p => p.theme.font.weight.bold};
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid ${p => p.theme.colors.grey[300]};
+    background-color: ${p => p.theme.colors.grey[100]};
 
     svg path {
       fill: ${p => p.theme.colors.primary.main};
@@ -53,35 +53,47 @@ const ListItem = styled.li`
 const Navigation = () => {
   return (
     <List>
-      <Link exact activeClassName="selected" to="/">
+      <Link exact activeClassName="selected" to={Routes.HOME}>
         <ListItem>
           <HomeIcon />
           <Spacing right="sm" />
-          Bảng tin
+          Home
         </ListItem>
       </Link>
 
-      <Link exact activeClassName="selected" to="/explore">
+      <Link exact activeClassName="selected" to={Routes.EXPLORE}>
         <ListItem>
           <ExploreIcon width={20} />
           <Spacing right="sm" />
-          Tìm kiếm
+          Explore
         </ListItem>
       </Link>
 
-      <Link exact activeClassName="selected" to="/people">
+      <Link exact activeClassName="selected" to={Routes.PEOPLE}>
         <ListItem>
           <PeopleIcon />
           <Spacing right="sm" />
-          Kết nối
+          People
         </ListItem>
       </Link>
 
-      <Link exact activeClassName="selected" to="/notifications">
+      <Link exact activeClassName="selected" to={Routes.NOTIFICATIONS}>
         <ListItem>
           <NotificationIcon width={18} />
           <Spacing right="sm" />
-          Thông báo
+          Notifications
+        </ListItem>
+      </Link>
+
+      <Link
+        exact
+        activeClassName="selected"
+        to={generatePath(Routes.MESSAGES, { userId: Routes.NEW_ID_VALUE })}
+      >
+        <ListItem>
+          <EnvelopeIcon width={18} />
+          <Spacing right="sm" />
+          Messages
         </ListItem>
       </Link>
     </List>

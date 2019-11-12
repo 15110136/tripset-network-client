@@ -14,6 +14,7 @@ export default {
       bold: '600',
     },
     size: {
+      tiny: '11px',
       xxs: '13px',
       xs: '14px',
       sm: '16px',
@@ -30,11 +31,11 @@ export default {
     black: '#000000',
     white: '#fff',
     success: '#34a853',
-    body: '#f1f1f1',
+    body: '#fcfbfe',
 
     primary: {
       light: '#7986cb',
-      main: '#3f51b5',
+      main: '#1498d5',
       dark: '#303f9f',
       contrastText: '#fff',
     },
@@ -51,6 +52,12 @@ export default {
       secondary: 'rgba(0, 0, 0, 0.54)',
       disabled: 'rgba(0, 0, 0, 0.38)',
       hint: 'rgba(0, 0, 0, 0.38)',
+    },
+
+    border: {
+      light: '#f5f5f5',
+      main: '#e0e0e0',
+      dark: '#bdbdbd',
     },
 
     error: {

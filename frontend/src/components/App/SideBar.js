@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { Spacing } from 'components/Layout';
 import Navigation from './Navigation';
-import { UserIcon } from 'components/icons';
+import Avatar from 'components/Avatar';
 
 import {
   SIDEBAR_DESKTOP_WIDTH,
@@ -28,16 +28,18 @@ const Root = styled.div`
   font-size: ${p => p.theme.font.size.xxs};
   z-index: ${p => p.theme.zIndex.sm};
   background-color: ${p => p.theme.colors.white};
-  box-shadow: ${p => p.theme.shadows.sm};
+  border-right: 1px solid ${p => p.theme.colors.border.main};
 
   @media (min-width: ${p => p.theme.screen.md}) {
     padding-top: 0;
     position: sticky;
     top: 100px;
     margin-left: ${p => (p.isOpen ? 0 : `-${SIDEBAR_DESKTOP_WIDTH}px`)};
-    width: ${SIDEBAR_DESKTOP_WIDTH}px;
-    box-shadow: none;
-    background-color: transparent;
+    flex-basis: ${SIDEBAR_DESKTOP_WIDTH}px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    border: 1px solid ${p => p.theme.colors.border.main};
+    border-radius: ${p => p.theme.radius.sm};
   }
 
   @media (max-width: ${p => p.theme.screen.md}) {
@@ -55,23 +57,8 @@ const User = styled(NavLink)`
 
   &:hover,
   &.selected {
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid ${p => p.theme.colors.grey[300]};
+    background-color: ${p => p.theme.colors.border.light};
   }
-`;
-
-const ImageContainer = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-`;
-
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 `;
 
 const FullName = styled.div`
@@ -96,13 +83,7 @@ const SideBar = ({ location, isOpen, sideBarRef }) => {
         to={generatePath(Routes.USER_PROFILE, { username: auth.user.username })}
         activeClassName="selected"
       >
-        <ImageContainer>
-          {auth.user.image ? (
-            <Image src={auth.user.image} />
-          ) : (
-            <UserIcon width="20" />
-          )}
-        </ImageContainer>
+        <Avatar image={auth.user.image} size={20} />
 
         <Spacing left="xxs">
           <FullName active={isAuthUsersProfilePage}>

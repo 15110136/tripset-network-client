@@ -5,8 +5,8 @@ import { generatePath } from 'react-router-dom';
 
 import { A } from 'components/Text';
 import Follow from 'components/Follow';
-import { UserIcon } from 'components/icons';
 import { Spacing } from 'components/Layout';
+import Avatar from 'components/Avatar';
 
 import * as Routes from 'routes';
 
@@ -17,7 +17,7 @@ const Root = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid ${p => p.theme.colors.grey[300]};
+  border-bottom: 1px solid ${p => p.theme.colors.border.main};
   padding: ${p => p.theme.spacing.xs};
   margin-bottom: ${p => p.theme.spacing.xxs};
 `;
@@ -27,19 +27,6 @@ const Author = styled.div`
   flex-direction: row;
   align-items: center;
   margin-right: ${p => p.theme.spacing.sm};
-`;
-
-const ImageContainer = styled.div`
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  overflow: hidden;
-`;
-
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 `;
 
 const UserName = styled.div`
@@ -60,13 +47,7 @@ const PostPopupInfo = ({ author }) => {
         <A
           to={generatePath(Routes.USER_PROFILE, { username: author.username })}
         >
-          <ImageContainer>
-            {author.image ? (
-              <Image src={author.image} />
-            ) : (
-              <UserIcon width="30" />
-            )}
-          </ImageContainer>
+          <Avatar image={author.image} />
         </A>
 
         <Spacing left="xs" inline>

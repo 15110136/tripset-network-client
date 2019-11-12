@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { ApolloProvider } from 'react-apollo';
-import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
+import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks';
 import { ThemeProvider } from 'styled-components';
 import { createApolloClient } from 'utils/apollo-client';
 import { StoreProvider } from 'store';
@@ -19,7 +19,7 @@ const API_URL = process.env.REACT_APP_API_URL;
 const WEBSOCKET_API_URL = process.env.REACT_APP_WEBSOCKET_API_URL;
 const websocketApiUrl = WEBSOCKET_API_URL
   ? WEBSOCKET_API_URL
-  : API_URL.replace('https://', 'wss://').replace('http://', 'wss://');
+  : API_URL.replace('https://', 'ws://').replace('http://', 'ws://');
 
 // Create a Apollo client
 const apolloClient = createApolloClient(API_URL, websocketApiUrl);
