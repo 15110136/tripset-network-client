@@ -220,7 +220,7 @@ const PostCard = ({
               {likes.length} likes
               <Spacing />
               <StyledButton onClick={toggleComment} text>
-                {comments.length} comments
+                {comments.length} bình luận
               </StyledButton>
             </Count>
 

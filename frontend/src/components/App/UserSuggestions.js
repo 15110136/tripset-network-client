@@ -89,7 +89,7 @@ const UserSuggestions = ({ pathname }) => {
 
         return (
           <Root>
-            <H3>Suggestions For You</H3>
+            <H3>Đề xuất bạn mới</H3>
 
             <List>
               {data.suggestPeople.map(user => (

@@ -36,7 +36,7 @@ const HeaderNotificationDropDown = ({
   return (
     <Root ref={notificationRef}>
       {!dropdownData.length ? (
-        <Empty>No new notifications.</Empty>
+        <Empty>Không có thông báo mới</Empty>
       ) : (
         dropdownData.map(notification => (
           <Notification

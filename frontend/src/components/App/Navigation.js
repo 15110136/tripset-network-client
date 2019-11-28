@@ -57,7 +57,7 @@ const Navigation = () => {
         <ListItem>
           <HomeIcon />
           <Spacing right="sm" />
-          Home
+          Trang chủ
         </ListItem>
       </Link>
 
@@ -65,7 +65,7 @@ const Navigation = () => {
         <ListItem>
           <ExploreIcon width={20} />
           <Spacing right="sm" />
-          Explore
+          Khám phá
         </ListItem>
       </Link>
 
@@ -81,7 +81,7 @@ const Navigation = () => {
         <ListItem>
           <NotificationIcon width={18} />
           <Spacing right="sm" />
-          Notifications
+          Thông báo
         </ListItem>
       </Link>
 
@@ -93,7 +93,7 @@ const Navigation = () => {
         <ListItem>
           <EnvelopeIcon width={18} />
           <Spacing right="sm" />
-          Messages
+          Tin nhắn
         </ListItem>
       </Link>
     </List>

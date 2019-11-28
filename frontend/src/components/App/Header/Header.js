@@ -180,7 +180,7 @@ const Header = ({ location, toggleSideBar }) => {
           </Logo>
 
           <Spacing left="sm" right="md">
-            <Search location={location} placeholder="Search people" />
+            <Search location={location} placeholder="TÌm kiếm bạn bè, bài viết ..." />
           </Spacing>
         </LeftSide>
 

@@ -30,7 +30,7 @@ const Input = styled.input`
     p.backgroundColor
       ? p.theme.colors[p.backgroundColor]
       : p.theme.colors.grey[200]};
-  transition: all 0.1s ease;
+  transition: all 0.3s ease;
 
   &:focus {
     width: 200%;
