@@ -187,7 +187,7 @@ const MessagesUsers = ({ location, authUser }) => {
           location={location}
           backgroundColor="white"
           forMessage
-          placeholder="Search message"
+          placeholder="Tìm kiếm tin nhắn"
         />
       </SearchContainer>
 

@@ -20,6 +20,8 @@ export const MESSAGES = '/messages/:userId';
 
 export const POST = '/post/:id';
 
+export const PLACE_DETAILS = '/place/:placeId/:lat/:lng'
+
 /**
  * Value that's used in place of id when creating something new.
  */

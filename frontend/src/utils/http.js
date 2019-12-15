@@ -35,3 +35,10 @@ export async function loadMapApi () {
 
   return window.google.maps;
 }
+
+export async function createMap (el, lat=10.776, lng=106.700, zoom=18) {
+  let Maps = await loadMapApi()
+  let place = new Maps.LatLng(lat, lng);
+  let maps = new Maps.Map(el, { center: place, zoom });
+  return maps
+}

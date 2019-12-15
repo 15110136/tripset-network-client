@@ -5,12 +5,11 @@ import { generatePath } from 'react-router-dom';
 
 import { Spacing } from 'components/Layout';
 import { A } from 'components/Text';
-import Avatar from 'components/Avatar';
 
 import * as Routes from 'routes';
 
 const Root = styled.div`
-  width: 200%;
+  width: 100%;
   max-height: 350px;
   min-height: 40px;
   overflow: auto;
@@ -39,7 +38,6 @@ const Item = styled.div`
 
 const Name = styled.div`
   font-weight: ${p => p.theme.font.weight.bold};
-  margin-bottom: 10px;
 `;
 
 const UserName = styled.div`
@@ -55,47 +53,26 @@ const NoSearchResult = styled.div`
 /**
  * Displays search result, meant to be used in Search component
  */
-const SearchResult = ({ places, users, forMessage }) => {
-  if (users.length < 1 && places.length < 1) {
+const SearchResultPlaces = ({ places }) => {
+  if (places.length < 1) {
     return (
       <Root>
-        <NoSearchResult>Không có kết quả</NoSearchResult>
+        <NoSearchResult>Không tìm thấy địa điểm phù hợp</NoSearchResult>
       </Root>
     );
   }
 
   return (
     <Root>
-      {users.map(user => (
-        <StyledA
-          key={user.id}
-          to={
-            forMessage
-              ? generatePath(Routes.MESSAGES, { userId: user.id })
-              : generatePath(Routes.USER_PROFILE, { username: user.username })
-          }
-        >
-          <Item>
-            <Avatar image={user.image} size={34} />
-
-            <Spacing left="xs">
-              <Name>{user.fullName}</Name>
-              <UserName>@{user.username}</UserName>
-            </Spacing>
-          </Item>
-        </StyledA>
-      ))}
-
       {places.map((place, index) => (
         <StyledA
           key={index}
-          to={generatePath(Routes.PLACE_DETAILS, { placeId: place.place_id, lat: place.geometry.location.lat(), lng: place.geometry.location.lng() })}
+          to={generatePath(Routes.PLACE_DETAILS, { placeId: place.place_id })}
         >
           <Item>
             <Spacing left="xs">
               <Name>{place.name}</Name>
               <UserName>Rating {place.rating}</UserName>
-              <UserName>{place.formatted_address}</UserName>
             </Spacing>
           </Item>
         </StyledA>
@@ -104,10 +81,8 @@ const SearchResult = ({ places, users, forMessage }) => {
   );
 };
 
-SearchResult.propTypes = {
-  users: PropTypes.array.isRequired,
-  places: PropTypes.array.isRequired,
-  forMessage: PropTypes.bool,
+SearchResultPlaces.propTypes = {
+  places: PropTypes.array.isRequired
 };
 
-export default SearchResult;
+export default SearchResultPlaces;

@@ -11,6 +11,7 @@ import { useClickOutside } from 'hooks/useClickOutside';
 import { useDebounce } from 'hooks/useDebounce';
 
 import { SEARCH_USERS } from 'graphql/user';
+import { loadMapApi } from 'utils/http';
 
 const StyledLoading = styled(Loading)`
   position: absolute;
@@ -36,6 +37,8 @@ const Search = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [servicePlace, setService] = useState(null);
+  const [places, setPlaces] = useState([]);
 
   // Close search result on click outside
   const inputRef = useRef(null);
@@ -43,12 +46,24 @@ const Search = ({
 
   // Debounce search query value
   const debounceSearchQuery = useDebounce(searchQuery, 500);
+  
+  useEffect(() => {
+    const setMap = async () => {
+      let Maps = await loadMapApi();
+      let place = new Maps.LatLng(10.776, 106.700);
+      let maps = new Maps.Map(document.getElementById('gmap'), { center: place, zoom: 15 });
+      let service = new Maps.places.PlacesService(maps)
+      return service
+    }
+
+    setService(setMap())
+  }, [])
 
   useEffect(() => {
     // Clear search input value, after location change
     setSearchQuery('');
   }, [location.pathname]);
-
+  
   useEffect(() => {
     const search = async () => {
       const { data } = await client.query({
@@ -72,6 +87,14 @@ const Search = ({
     // Trim white space only from beginning
     const value = e.target.value.replace(/^\s+/g, '');
     setSearchQuery(value);
+    let service = await servicePlace
+    service.textSearch({
+      query: value,
+      type: ['tourist_attraction']
+    }, (results, status) => {
+      setPlaces(results)
+    })
+
     if (value) {
       setLoading(true);
     }
@@ -94,7 +117,7 @@ const Search = ({
       {loading && <StyledLoading size="xxs" />}
 
       {isOpenSearchResult && (
-        <SearchResult users={users} forMessage={forMessage} />
+        <SearchResult places={places} users={users} forMessage={forMessage} />
       )}
     </SearchInput>
   );

@@ -56,7 +56,7 @@ const App = () => {
         return { getAuthUser: authUser };
       },
     });
-
+    
     return () => {
       unsubscribe();
     };
@@ -67,7 +67,6 @@ const App = () => {
   return (
     <Router>
       <GlobalStyle />
-
       <ScrollToTop>
         <Switch>
           {data && data.getAuthUser ? (

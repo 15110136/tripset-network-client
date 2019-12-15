@@ -26,6 +26,7 @@ import theme from 'theme';
 
 import { useStore } from 'store';
 import { SET_AUTH_USER } from 'store/auth';
+import PlaceDetails from 'pages/PlaceDetails.js';
 
 const Root = styled.div`
   display: flex;
@@ -98,6 +99,8 @@ const AppLayout = ({ location, authUser }) => {
           <Route exact path={Routes.MESSAGES} component={Messages} />
 
           <Route exact path={Routes.USER_PROFILE} component={Profile} />
+
+          <Route exact path={Routes.PLACE_DETAILS} component={PlaceDetails} />
 
           <Route exact path={Routes.POST} component={Post} />
 

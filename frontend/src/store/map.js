@@ -1,15 +1,25 @@
+export const SET_MAP = 'SET_MAP';
+export const SET_PLACE_SERVICE = 'SET_PLACE_SERVICE';
+export const CLEAR_MAP = 'CLEAR_MAP';
+
 export const mapInitialState = {
-  Map: null,
+  Maps: null,
+  placeService: null
 };
 
 export const mapReducer = (state = mapInitialState, action) => {
   switch (action.type) {
-    case 'SET_MAP':
+    case SET_MAP:
       return {
         ...state,
-        Map: action.payload,
+        Maps: action.payload,
       };
-    case 'CLEAR_MAP': {
+    case SET_PLACE_SERVICE:
+      return {
+        ...state,
+        placeService: action.payload
+      }
+    case CLEAR_MAP: {
       return {
         ...state,
         ...mapInitialState,

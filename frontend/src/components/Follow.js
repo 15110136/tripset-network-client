@@ -13,6 +13,7 @@ import { HOME_PAGE_POSTS_LIMIT } from 'constants/DataLimit';
 import { useStore } from 'store';
 
 import { useNotifications } from 'hooks/useNotifications';
+import { Loading } from './Loading';
 
 const Button = styled.button`
   height: 27px;
@@ -93,10 +94,9 @@ const Follow = ({ user }) => {
         return (
           <Button
             onClick={() => handleClickFollow(mutate)}
-            disabled={loading}
             isFollowing={isFollowing}
           >
-            {isFollowing ? 'Following' : 'Follow'}
+            {loading ? <Loading color={"white"}/> : (isFollowing ? 'Following' : 'Follow')}
           </Button>
         );
       }}
