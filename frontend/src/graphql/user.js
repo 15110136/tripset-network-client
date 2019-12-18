@@ -232,6 +232,17 @@ export const REQUEST_PASSWORD_RESET = gql`
 `;
 
 /**
+ * Update info user
+ */
+export const UPDATE_INFO_USER = gql`
+  mutation($input: UserInfoInput!) {
+    uploadInfo(input: $input) {
+      username
+    }
+  }
+`;
+
+/**
  * Verify reset password token
  */
 export const VERIFY_RESET_PASSWORD_TOKEN = gql`

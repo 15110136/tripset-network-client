@@ -117,6 +117,7 @@ const CreatePost = () => {
 
   const handleSubmit = async (e, createPost) => {
     e.preventDefault();
+    debugger
     createPost();
     handleReset();
   };

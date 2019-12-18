@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link, generatePath } from 'react-router-dom';
@@ -11,10 +11,12 @@ import { Spacing } from 'components/Layout';
 import Follow from 'components/Follow';
 import ProfileImageUpload from './ProfileImageUpload';
 import ProfileCoverUpload from './ProfileCoverUpload';
+import ProfilePopup from './ProfilePopup';
 
 import { useStore } from 'store';
 
 import * as Routes from 'routes';
+import Modal from 'components/Modal';
 
 const Root = styled.div`
   display: flex;
@@ -85,10 +87,18 @@ const List = styled.div`
   }
 `;
 
+const Edit = styled.div`
+  font-size: ${p => p.theme.font.size.sm};
+  padding: 5px;
+  border: 1px solid ${p => p.theme.colors.border.main};
+  cursor: pointer;
+`
+
 /**
  * Renders user information in profile page
  */
 const ProfileInfo = ({ user }) => {
+  const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false)
   const [{ auth }] = useStore();
 
   const { data, loading } = useSubscription(IS_USER_ONLINE_SUBSCRIPTION, {
@@ -98,6 +108,19 @@ const ProfileInfo = ({ user }) => {
   let isUserOnline = user.isOnline;
   if (!loading && data) {
     isUserOnline = data.isUserOnline.isOnline;
+  }
+
+  const openInfoModal = () => {
+    setIsInfoPopupOpen(true)
+  }
+
+  const closeModal = () => {
+    setIsInfoPopupOpen(false)
+  }
+
+  const onChangeInfo = name => {
+    closeModal()
+    window.history.pushState('', '', generatePath(Routes.USER_PROFILE, { username: name }))
   }
 
   return (
@@ -130,6 +153,18 @@ const ProfileInfo = ({ user }) => {
                 Message
               </Message>
             </FollowAndMessage>
+          )}
+          {auth.user.id === user.id && (
+            <div>
+              <Spacing left="md">
+                <Edit onClick={() => openInfoModal()}>
+                  Chỉnh sửa thông tin
+                </Edit>
+              </Spacing>
+              <Modal open={isInfoPopupOpen} onClose={closeModal}>
+                <ProfilePopup user={user} name={onChangeInfo}/>
+              </Modal>
+            </div>
           )}
         </FullName>
       </ProfileImage>
