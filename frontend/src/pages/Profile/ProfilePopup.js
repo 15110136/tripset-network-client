@@ -5,7 +5,6 @@ import Checkbox from 'components/Checkbox';
 import { Mutation } from 'react-apollo';
 import { UPDATE_INFO_USER, GET_AUTH_USER } from 'graphql/user';
 
-import * as Routes from 'routes';
 import { Loading } from 'components/Loading';
 
 const Container = styled.div`
@@ -75,7 +74,8 @@ const ProfilePopup = ({ name, user }) => {
         id: (_user && _user.id) || '',
         username: (_user && _user.username) || '',
         email: (_user && _user.email) || '',
-        fullName: (_user && _user.fullName) || ''
+        fullName: (_user && _user.fullName) || '',
+        password
       } }}
       refetchQueries={() => [{ query: GET_AUTH_USER }]}
     >
@@ -117,9 +117,9 @@ const ProfilePopup = ({ name, user }) => {
                       />
                     </Item>
                     <Item>
-                      <label>Password</label>
+                      <label>New password</label>
                       <InputText
-                        type="text"
+                        type="password"
                         name="password"
                         value={password}
                         onChange={handleChangeInputPassword}

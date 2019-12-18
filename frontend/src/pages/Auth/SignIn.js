@@ -65,6 +65,10 @@ const SignIn = ({ history, location, refetch }) => {
       localStorage.setItem('token', data.signin.token);
       await refetch();
       history.push(Routes.HOME);
+    }).catch(err => {
+      if (err) {
+        setError('Mật khẩu không chính xác')
+      }
     });
   };
 
