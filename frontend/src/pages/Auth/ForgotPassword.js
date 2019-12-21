@@ -72,7 +72,7 @@ const ForgotPassword = () => {
       <Root>
         <Container>
           <Spacing bottom="sm">
-            <H1>{message}</H1>
+            <a href={message}>Nhấp vào link để reset mật khẩu</a>
           </Spacing>
         </Container>
       </Root>
