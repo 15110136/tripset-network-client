@@ -27,6 +27,7 @@ import theme from 'theme';
 import { useStore } from 'store';
 import { SET_AUTH_USER } from 'store/auth';
 import PlaceDetails from 'pages/PlaceDetails.js';
+import NotFoundProfile from 'pages/NotFoundProfile';
 
 const Root = styled.div`
   display: flex;
@@ -79,6 +80,12 @@ const AppLayout = ({ location, authUser }) => {
   }, [location.pathname, isDesktop]);
 
   if (!auth.user) return null;
+
+  if (!auth.user.isActive) {
+    return (
+      <NotFoundProfile userId={auth.user.id}/>
+    )
+  }
 
   return (
     <>

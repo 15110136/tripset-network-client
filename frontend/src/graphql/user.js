@@ -12,6 +12,8 @@ const userPayload = `
   id
   username
   email
+  isOnline
+  isActive
   fullName
   image
   imagePublicId

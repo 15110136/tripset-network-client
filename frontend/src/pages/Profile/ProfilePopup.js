@@ -75,6 +75,7 @@ const ProfilePopup = ({ name, user }) => {
         username: (_user && _user.username) || '',
         email: (_user && _user.email) || '',
         fullName: (_user && _user.fullName) || '',
+        isActive: isLock,
         password
       } }}
       refetchQueries={() => [{ query: GET_AUTH_USER }]}

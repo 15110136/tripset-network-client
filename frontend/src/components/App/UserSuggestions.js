@@ -59,6 +59,7 @@ const FullName = styled.div`
 
 const UserName = styled.div`
   color: ${p => p.theme.colors.text.hint};
+  word-break: break-word;
 `;
 
 /**
