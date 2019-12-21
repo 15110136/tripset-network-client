@@ -97,6 +97,7 @@ const ResetPassword = ({ history, location, refetch }) => {
               >
                 {(resetPassword, { loading, error: apiError }) => {
                   if (apiError) return <H1>{apiError}</H1>;
+                  if (loading) return <Loading top="lg"/>
 
                   return (
                     <>
