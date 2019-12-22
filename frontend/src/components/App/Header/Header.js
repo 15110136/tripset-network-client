@@ -176,7 +176,7 @@ const Header = ({ location, toggleSideBar }) => {
           </Hamburger>
 
           <Logo to={Routes.HOME}>
-            <Image src={`./vivu-icon.png`} />
+            <Image src={`/vivu-icon.png`} />
           </Logo>
 
           <Spacing left="sm" right="md">

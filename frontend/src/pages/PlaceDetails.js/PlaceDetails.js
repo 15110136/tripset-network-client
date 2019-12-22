@@ -3,6 +3,9 @@ import { Container } from 'components/Layout'
 import { createMap, loadMapApi } from 'utils/http';
 import { H1 } from 'components/Text';
 import styled from 'styled-components';
+import MapPlace from './MapPlace';
+import PlacePhotos from './PlacePhotos';
+import PlaceReviews from './PlaceReviews';
 
 export default class PlaceDetails extends Component {
   constructor(props) {
@@ -16,65 +19,92 @@ export default class PlaceDetails extends Component {
     }
   }
 
-  initGGmap = async (lat, lng, placeId) => {
+  initGGmap = async () => {
+    const { placeId, lat, lng } = this.props.match.params
     const Maps = await loadMapApi();
-    const maps = await createMap(document.getElementById('gmap-place'), lat, lng, 18)
+    const maps = await createMap(document.createElement('div'), lat, lng, 18)
     const service = new Maps.places.PlacesService(maps)
-    const infowindow = new Maps.InfoWindow()
-
-    return new Promise(function(resolve, reject) {
-      let request = {
-        placeId,
-        fields: ['name', 'formatted_address', 'place_id', 'geometry']
+    service.getDetails({
+      placeId,
+      fields: ['name', 'formatted_address', 'place_id', 'url', 'photo',
+        'rating', 'reviews'
+      ]
+    }, (place, sts) => {
+      if (sts === Maps.places.PlacesServiceStatus.OK) {
+        place.photos = place.photos.map(item => {
+          item.src = item.getUrl()
+          return item
+        })
+        this.setState({
+          place
+        })
       }
-      service.getDetails(request, (place, status) => {
-        if (status === Maps.places.PlacesServiceStatus.OK) {
-          resolve(place)
-          let marker = new Maps.Marker({
-            map: maps,
-            position: place.geometry.location
-          })
-  
-          Maps.event.addListener(marker, 'click', function() {
-            infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
-              'Place ID: ' + place.place_id + '<br>' +
-              place.formatted_address + '</div>');
-            infowindow.open(maps, this);
-          });
-        }
-      })
     })
   }
   
-  async componentDidMount () {
-    const { placeId, lat, lng } = this.props.match.params
-    this.initGGmap(lat, lng, placeId).then(res => console.log(res))
-    // let { Maps, service, maps } = await this.initGGmap(lat, lng, placeId)
-    // let a = service.getDetails({ placeId, fields: ['name', 'formatted_address', 'place_id', 'geometry'] }, (plc, status) => {
-    //   return new Promise(plc)
-    // })
+  componentDidUpdate() {
+    this.initGGmap()
   }
 
+  async componentDidMount () {
+    this.initGGmap()
+  }
+  
   render() {
-    const MapPlace = styled.div`
-      height: 70vh;
-      width: 100%;
-      margin: 0 auto;
-    `
-
     const HeaderDetails = styled.div`
+      display: flex;
+      align-items: baseline;
+
       ${H1} {
-        font-size: ${p => p.theme.font.size.lg};
+        font-size: 46px;
+      }
+    `
+    const Address = styled.p`
+      font-weight: bold;
+
+      a img {
+        width: 30px;
+        margin-left: 10px;
       }
     `
 
+    const Rating = styled.span`
+      font-weight: bold;
+      font-size: 46px;
+      margin-left: 50px;
+
+      img {
+        width: 34px;
+      }
+    `
+
+    const { placeId, lat, lng } = this.props.match.params
+    const { place } = this.state
     return (
       <Fragment>
         <Container spacing="xxxs">
-          <MapPlace id="gmap-place"/>
-          <HeaderDetails>
-            <H1>{this.place}</H1>
-          </HeaderDetails>
+          <MapPlace placeId={placeId} lat={lat} lng={lng}/>
+          {place && (
+            <div>
+              <HeaderDetails>
+                <H1>
+                  {place.name}
+                </H1>
+                <Rating>
+                  {place.rating}
+                  <img src="/favourites.png" alt="star"/>
+                </Rating>
+              </HeaderDetails>
+              <Address>
+                {place.formatted_address}
+                <a href={place.url}>
+                  <img src="/map.png" alt="map-icon"/>
+                </a>
+              </Address>
+              <PlacePhotos list={place.photos}/>
+              <PlaceReviews list={place.reviews}/>
+            </div>
+          )}
         </Container>
       </Fragment>
     )
